@@ -1,3 +1,0 @@
-<div>
-    companyyyyyyyyyyyyyy
-</div>
