@@ -28,4 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'role:admin'])->group(function () {
+});
+Route::middleware(['auth', 'role:company'])->group(function () {
+});
+Route::middleware(['auth', 'role:user'])->group(function () {
+});
+
+require __DIR__ . '/auth.php';

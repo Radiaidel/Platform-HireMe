@@ -78,7 +78,7 @@
                 </div>
 
                 <!-- Enterprise Card -->
-                <div id="enterpriseCard" class="  p-4 border  border-indigo-400 rounded-md cursor-pointer hover:border-indigo-800" onclick="selectRole('enterprise')">
+                <div id="enterpriseCard" class="  p-4 border  border-indigo-400 rounded-md cursor-pointer hover:border-indigo-800" onclick="selectRole('company')">
                     <div class="flex items-center justify-center mb-2">
                         <svg fill="#4848ff" width="40px" height="40px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#4848ff">
 
@@ -125,7 +125,7 @@
             userCard.classList.remove('border-indigo-400');
             enterpriseCard.classList.remove('border-indigo-900','border-2');
             enterpriseCard.classList.add('border-indigo-400');
-        } else if (role === 'enterprise') {
+        } else if (role === 'company') {
             enterpriseCard.classList.add('border-indigo-900','border-2');
             enterpriseCard.classList.remove('border-indigo-400');
             userCard.classList.remove('border-indigo-900','border-2');
