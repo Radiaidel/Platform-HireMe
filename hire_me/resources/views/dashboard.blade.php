@@ -2,7 +2,7 @@
     <div class="max-w-4xl mx-auto p-8">
 
         <!-- Bouton d'ajout d'offre d'emploi -->
-        <button onclick="showModal()" id="showModalButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8 right-0" >Ajouter une offre d'emploi</button>
+        <button onclick="showModal()" id="showModalButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8 right-0">Ajouter une offre d'emploi</button>
 
         <!-- Liste des offres d'emploi -->
         <div class="space-y-4">
@@ -63,33 +63,35 @@
                                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">Ajouter une nouvelle offre d'emploi</h3>
                                 <div>
                                     <form action="/ajouter-offre" method="POST">
-                                        @csrf 
+                                        @csrf
+                                        <input type="hidden" name="company_id" value="{{ auth()->user()->id }}">
                                         <div class="mb-4">
-                                            <label for="titre" class="block text-gray-700 font-bold mb-2">Titre de l'offre :</label>
-                                            <input type="text" id="titre" name="titre" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Titre de l'offre" required>
+                                            <label for="title" class="block text-gray-700 font-bold mb-2">Titre de l'offre :</label>
+                                            <input type="text" id="title" name="title" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Titre de l'offre" required>
                                         </div>
                                         <div class="mb-4">
                                             <label for="description" class="block text-gray-700 font-bold mb-2">Description :</label>
                                             <textarea id="description" name="description" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Description de l'offre" required></textarea>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="competences" class="block text-gray-700 font-bold mb-2">Compétences requises :</label>
-                                            <textarea type="text" id="competences" name="competences" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Compétences requises" required></textarea>
+                                            <label for="skills_required" class="block text-gray-700 font-bold mb-2">Compétences requises :</label>
+                                            <textarea type="text" id="skills_required" name="skills_required" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Compétences requises" required></textarea>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="type_contrat" class="block text-gray-700 font-bold mb-2">Type de contrat :</label>
-                                            <select id="type_contrat" name="type_contrat" class="border border-gray-300 rounded-md px-3 py-2 w-full" required>
+                                            <label for="contract_type" class="block text-gray-700 font-bold mb-2">Type de contrat :</label>
+                                            <select id="contract_type" name="contract_type" class="border border-gray-300 rounded-md px-3 py-2 w-full" required>
                                                 <option value="distance">À distance</option>
                                                 <option value="hybride">Hybride</option>
                                                 <option value="temps_plein">À temps plein</option>
                                             </select>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="emplacement" class="block text-gray-700 font-bold mb-2">Emplacement :</label>
-                                            <input type="text" id="emplacement" name="emplacement" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Emplacement" required>
+                                            <label for="location" class="block text-gray-700 font-bold mb-2">Emplacement :</label>
+                                            <input type="text" id="location" name="location" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Emplacement" required>
                                         </div>
                                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter</button>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
