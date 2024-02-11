@@ -8,14 +8,23 @@ class JobOfferController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role === 'company') {
+        $message = null;
+        $offers = collect(); // Initialisation avec une collection vide    
+        if (auth()->user()->role === 'company' && auth()->user()->company_id !== null) {
             $offers = JobOffer::where('company_id', auth()->user()->company->id)->get();
+            
+            if (!is_null($offers) && $offers->isEmpty()) {
+                $message = "Vous n'avez pas encore ajouté d'offres d'emploi.";
+            }
         } else {
-            $offers = JobOffer::all();
+            $message = "Veuillez compléter votre profil d'entreprise pour ajouter une offre.";
         }
-
-        return view('dashboard', ['offers' => $offers]);
+    
+        return view('dashboard', compact('offers', 'message'));
     }
+    
+
+    
     public function store(Request $request)
     {
         $validatedData = $request->validate([
