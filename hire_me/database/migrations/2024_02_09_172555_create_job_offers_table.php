@@ -19,7 +19,9 @@ return new class extends Migration
             $table->integer('visits')->default(0);
             $table->enum('contract_type', ['à distance', 'hybride', 'à temps plein']);
             $table->string('location');
+            $table->timestamp('deadline')->nullable();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->integer('is_archived')->default(0);
             $table->timestamps();
         });
     }

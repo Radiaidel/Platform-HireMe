@@ -6,30 +6,31 @@
 
         <!-- Liste des offres d'emploi -->
         <div class="space-y-4">
-            <!-- Première carte -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="flex p-4">
-                    <img class="w-16 h-16 rounded-full mr-4" src="https://civi.uxper.co/wp-content/uploads/2022/11/avatar_uxper.png" alt="Logo de l'entreprise">
-                    <div>
-                        <h3 class="font-semibold text-lg"><a href="https://civi.uxper.co/jobs/development-it/sr-backend-go-developer-crypto-industry/">Sr. Backend Go Developer</a></h3>
-                        <p class="text-gray-600">par <a href="https://civi.uxper.co/companies/software/uxper/" class="text-blue-500">Uxper</a> dans <a href="https://civi.uxper.co/jobs-categories/development-it/" class="text-blue-500">Development &amp; IT</a></p>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex flex-wrap gap-2 mb-2">
-                        <span class="bg-blue-100 text-blue-500 px-2 py-1 rounded-full text-xs border border-blue-500">Remote</span>
-                        <span class="bg-blue-100 text-blue-500 px-2 py-1 rounded-full text-xs border border-blue-500">Ashkasham</span>
-                    </div>
-                </div>
-                <div class="bg-gray-100 p-4 flex justify-between items-center">
-                    <div class="mr-4">
-                        <p class="text-gray-600">571 days left to apply</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-600">$1000 - $2000/month</p>
-                    </div>
-                </div>
+        @foreach($offers as $offer)
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="flex p-4">
+            <img class="w-16 h-16 rounded-full mr-4" src="{{ $offer->company->logo }}" alt="Logo de l'entreprise">
+            <div>
+                <h3 class="font-semibold text-lg"><span>{{ $offer->title }}</span></h3>
+                <p class="text-gray-600">par <span class="text-blue-500">{{ $offer->company->name }}</span></p>
             </div>
+        </div>
+        <div class="p-4">
+            <div class="flex flex-wrap gap-2 mb-2">
+                <span class="bg-blue-100 text-blue-500 px-2 py-1 rounded-full text-xs border border-blue-500">{{ $offer->location }}</span>
+            </div>
+        </div>
+        <div class="bg-gray-100 p-4 flex justify-between items-center">
+            <div class="mr-4">
+                <p class="text-gray-600">{{ $offer->daysLeftToApply }} left to apply</p>
+            </div>
+            <div>
+                <p class="text-gray-600">{{ $offer->salary }}</p>
+            </div>
+        </div>
+    </div>
+@endforeach
+
         </div>
 
         <!-- Modal d'ajout d'offre d'emploi -->
@@ -80,7 +81,7 @@
                                         <div class="mb-4">
                                             <label for="contract_type" class="block text-gray-700 font-bold mb-2">Type de contrat :</label>
                                             <select id="contract_type" name="contract_type" class="border border-gray-300 rounded-md px-3 py-2 w-full" required>
-                                                <option value="distance">À distance</option>
+                                                <option value="à distance">À distance</option>
                                                 <option value="hybride">Hybride</option>
                                                 <option value="temps_plein">À temps plein</option>
                                             </select>

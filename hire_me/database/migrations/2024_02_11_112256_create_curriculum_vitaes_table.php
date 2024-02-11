@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('curriculum_vitaes', function (Blueprint $table) {
             $table->id();
-            $table->string('slogan');
-            $table->string('industry');
-            $table->text('description');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('is_archived')->default(0);
+            $table->foreignId('job_seeker_id')->constrained()->onDelete('cascade');
+            $table->json('skills')->nullable();
+            $table->json('experiences')->nullable();
+            $table->json('education')->nullable();
+            $table->json('languages')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('curriculum_vitaes');
     }
 };

@@ -30,7 +30,21 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        // Vérifier si l'utilisateur a une entreprise associée
+        $company = $user->company;
+
+        // Si l'utilisateur n'a pas d'entreprise, créez-en une nouvelle
+        if (!$company) {
+            $company = new Company();
+            $company->user_id = $user->id;
+        }
+
+        $company->fill($request->only(['slogan', 'industry', 'description']));
+        $company->user_id = $user->id;
+        $company->save();
+
+        $user->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
