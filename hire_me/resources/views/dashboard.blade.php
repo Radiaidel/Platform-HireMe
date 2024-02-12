@@ -38,16 +38,15 @@
                             <span class="text-gray-600">{{ $offer->deadline ? $offer->deadline->format('d/m/Y') : 'Pas de date limite' }}</span>
                         </div>
                     </div>
+                    @if(auth()->user()->role === 'company')
                     <div class="p-4 flex items-center justify-between">
-                        <form action="{{ route('offers.destroy', $offer->id) }}" method="POST">
+                        <form action="{{route('offer.destroy')}}" method="POST">
                             @csrf
+                            <input type="hidden" name="offer_id" value="{{ $offer->id}}">
                             <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
                         </form>
-                        <form action="{{ route('offers.edit', $offer->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="text-blue-500 hover:text-blue-700">Edit</button>
-                        </form>
                     </div>
+                    @endif
                 </div>
             </a>
             @endforeach
@@ -56,6 +55,11 @@
         </div>
         @endif
         <!-- Modal d'ajout d'offre d'emploi -->
+
+
+
+
+
         <div id="myModal" class="hidden fixed inset-0 overflow-y-auto" x-show="showModal" @click.away="showModal = false">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <!-- Overlay -->
@@ -143,6 +147,5 @@
         modal.classList.add('hidden');
     }
 
-    // Écouter l'événement de clic sur le bouton
     showModalButton.addEventListener('click', showModal);
 </script>

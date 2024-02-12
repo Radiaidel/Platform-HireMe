@@ -29,13 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/offers/{offer}', [JobOfferController::class ,'show'])->name('offers.show');
+    Route::get('/offers/{offer}', [JobOfferController::class, 'show'])->name('offers.show');
 });
 
 Route::middleware(['auth', 'role:company'])->group(function () {
     Route::post('/ajouter-offre', [JobOfferController::class, 'store'])->name('offer.store');
-    Route::post('/offers/{offer}', [JobOfferController::class, 'destroy'])->name('offers.destroy');
-    Route::post('/offers/{offer}', [JobOfferController::class ,'update'])->name('offers.update');
+    Route::post('/offers', [JobOfferController::class, 'destroy'])->name('offer.destroy');
+    Route::get('/offers/{offer}/edit', [JobOfferController::class, 'edit'])->name('offers.edit');
+    Route::put('/offers/update', [JobOfferController::class, 'update'])->name('offers.update');
 });
 
 
@@ -51,4 +52,4 @@ Route::middleware(['auth', 'role:company'])->group(function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

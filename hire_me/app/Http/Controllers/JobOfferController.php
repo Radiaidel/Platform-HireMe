@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -10,20 +11,26 @@ class JobOfferController extends Controller
     public function index()
     {
         $message = null;
-        $offers = collect(); // Initialisation avec une collection vide    
+        $offers = collect();   
         if (auth()->user()->role === 'company' && auth()->user()->company !== null) {
             $offers = JobOffer::where('company_id', auth()->user()->company->id)->get();
-            
+
             if ($offers->isEmpty()) {
                 $message = "Vous n'avez pas encore ajouté d'offres d'emploi.";
             }
         } else {
-            $message = "Veuillez compléter votre profil d'entreprise pour ajouter une offre.";
+            if(auth()->user()->role === 'company'){
+                $message = "Veuillez compléter votre profil d'entreprise pour ajouter une offre.";
+            }
+            else{
+                $offers = JobOffer::all();
+
+            }
         }
-    
+
         return view('dashboard', compact('offers', 'message'));
     }
-    
+
 
     public function show(JobOffer $offer)
     {
@@ -42,20 +49,24 @@ class JobOfferController extends Controller
         $company = auth()->user()->company;
 
         $validatedData['company_id'] = $company->id;
-    
+
         JobOffer::create($validatedData);
 
         return redirect()->route('dashboard')->with('success', 'Offre d\'emploi ajoutée avec succès!');
     }
-    public function destroy(JobOffer $offer): RedirectResponse
+    public function destroy(Request $request)
     {
+        $offer = JobOffer::findOrFail($request->offer_id);
 
         if ($offer->company_id !== auth()->user()->company->id) {
-            return redirect()->route('dashboard')->with('error', 'Vous n\'êtes pas autorisé à supprimer cette offre.');
+            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à supprimer cette offre.');
         }
-    
+
         $offer->delete();
-    
-        return redirect()->route('dashboard')->with('success', 'L\'offre a été supprimée avec succès.');
+
+        return redirect()->back()->with('success', 'L\'offre a été supprimée avec succès.');
     }
+
+
+
 }
