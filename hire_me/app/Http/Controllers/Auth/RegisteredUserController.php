@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
             'profile_image' => ['required', 'image'],
             'role' => ['required', 'string', 'in:user,company'],
         ]);
-        $profileImage = $request->file('profile_image')->store('profile_images');
+        $profileImage = $request->file('profile_image')->store('images','public');
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class JobOfferController extends Controller
 {
@@ -10,10 +11,10 @@ class JobOfferController extends Controller
     {
         $message = null;
         $offers = collect(); // Initialisation avec une collection vide    
-        if (auth()->user()->role === 'company' && auth()->user()->company_id !== null) {
+        if (auth()->user()->role === 'company' && auth()->user()->company !== null) {
             $offers = JobOffer::where('company_id', auth()->user()->company->id)->get();
             
-            if (!is_null($offers) && $offers->isEmpty()) {
+            if ($offers->isEmpty()) {
                 $message = "Vous n'avez pas encore ajouté d'offres d'emploi.";
             }
         } else {
@@ -24,7 +25,10 @@ class JobOfferController extends Controller
     }
     
 
-    
+    public function show(JobOffer $offer)
+    {
+        return view('offers.show', compact('offer'));
+    }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -42,4 +46,16 @@ class JobOfferController extends Controller
         JobOffer::create($validatedData);
 
         return redirect()->route('dashboard')->with('success', 'Offre d\'emploi ajoutée avec succès!');
-    }}
+    }
+    public function destroy(JobOffer $offer): RedirectResponse
+    {
+
+        if ($offer->company_id !== auth()->user()->company->id) {
+            return redirect()->route('dashboard')->with('error', 'Vous n\'êtes pas autorisé à supprimer cette offre.');
+        }
+    
+        $offer->delete();
+    
+        return redirect()->route('dashboard')->with('success', 'L\'offre a été supprimée avec succès.');
+    }
+}

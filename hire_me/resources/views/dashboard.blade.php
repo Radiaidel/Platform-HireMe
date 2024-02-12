@@ -1,41 +1,57 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto p-8">
 
-        @if (auth()->user()->role === 'company' && auth()->user()->company_id !== null)
+        @if (auth()->user()->role === 'company' && auth()->user()->company !== null)
         <button onclick="showModal()" id="showModalButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8">Ajouter une offre d'emploi</button>
         @endif
 
         @if ($offers->isEmpty())
         <div class="text-center text-gray-600 font-bold mb-8">
-           {{$message}}
+            {{$message}}
         </div>
         @else
         <div class="space-y-4">
 
             @foreach($offers as $offer)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="flex p-4">
-                    <img class="w-16 h-16 rounded-full mr-4" src="{{ $offer->company->logo }}" alt="Logo de l'entreprise">
-                    <div>
-                        <h3 class="font-semibold text-lg"><span>{{ $offer->title }}</span></h3>
-                        <p class="text-gray-600">par <span class="text-blue-500">{{ $offer->company->name }}</span></p>
+            <a href="{{ route('offers.show', $offer->id) }}" class="block mb-4">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+                    <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="{{ asset('storage/app/' . $offer->company->logo) }}" alt="Logo">
+                            <div>
+                                <h3 class="font-semibold text-lg">{{ $offer->title }}</h3>
+                                <p class="text-gray-600">par <span class="text-blue-500">{{ auth()->user()->name }}</span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-xs">{{ $offer->location }}</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700">{{ $offer->description }}</p>
+                    </div>
+                    <div class="p-4 flex items-center justify-between border-t border-gray-200">
+                        <div>
+                            <span class="bg-blue-100 text-blue-500 px-2 py-1 rounded-full  border border-blue-500">{{ $offer->contract_type }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">{{ $offer->deadline ? $offer->deadline->format('d/m/Y') : 'Pas de date limite' }}</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex items-center justify-between">
+                        <form action="{{ route('offers.destroy', $offer->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                        </form>
+                        <form action="{{ route('offers.edit', $offer->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="text-blue-500 hover:text-blue-700">Edit</button>
+                        </form>
                     </div>
                 </div>
-                <div class="p-4">
-                    <div class="flex flex-wrap gap-2 mb-2">
-                        <span class="bg-blue-100 text-blue-500 px-2 py-1 rounded-full text-xs border border-blue-500">{{ $offer->location }}</span>
-                    </div>
-                </div>
-                <div class="bg-gray-100 p-4 flex justify-between items-center">
-                    <div class="mr-4">
-                        <p class="text-gray-600">{{ $offer->daysLeftToApply }} left to apply</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-600">{{ $offer->salary }}</p>
-                    </div>
-                </div>
-            </div>
+            </a>
             @endforeach
+
 
         </div>
         @endif
