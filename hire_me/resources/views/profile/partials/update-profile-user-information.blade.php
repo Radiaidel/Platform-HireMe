@@ -17,6 +17,12 @@
         @csrf
         @method('patch')
         <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
+        <div class="mb-4">
+            <x-input-label for="about" :value="__('À propos :')" />
+            <textarea id="about" name="about" class="block w-full mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required autofocus autocomplete="about">{{ old('about', optional($jobseeker)->about) }}</textarea>            <x-input-error class="mt-2" :messages="$errors->get('about')" />
+        </div>
+
+
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
@@ -24,35 +30,31 @@
         </div>
 
         <div class="mb-4">
-                <label for="title" class="block text-gray-700 font-bold mb-2">Titre :</label>
-                <input type="text" id="title" name="title" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Titre" required>
-            </div>
+            <x-input-label for="title" :value="__('Titre :')" />
+            <x-text-input id="title" name="title" type="text" class="block w-full mt-1" :value="old('title', optional($jobseeker)->title)" required autofocus autocomplete="title" />
+        </div>
 
-            <!-- Poste actuel -->
-            <div class="mb-4">
-                <label for="current_position" class="block text-gray-700 font-bold mb-2">Poste actuel :</label>
-                <input type="text" id="current_position" name="current_position" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Poste actuel" required>
-            </div>
+        <!-- Poste actuel -->
+        <div class="mb-4">
+            <x-input-label for="current_position" :value="__('Poste actuel :')" />
+            <x-text-input id="current_position" name="current_position" type="text" class="block w-full mt-1" :value="old('current_position', optional($jobseeker)->current_position)" required autofocus autocomplete="current_position" />
+        </div>
 
-            <div class="mb-4">
-                <label for="industry" class="block text-gray-700 font-bold mb-2">Industrie :</label>
-                <input type="text" id="industry" name="industry" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Industrie" required>
-            </div>
+        <div class="mb-4">
+            <x-input-label for="industry" :value="__('Industrie :')" />
+            <x-text-input id="industry" name="industry" type="text" class="block w-full mt-1" :value="old('industry', optional($jobseeker)->industry)" required autofocus autocomplete="industry" />
+        </div>
 
-            <div class="mb-4">
-                <label for="address" class="block text-gray-700 font-bold mb-2">Adresse :</label>
-                <input type="text" id="address" name="address" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Adresse" required>
-            </div>
+        <div class="mb-4">
+            <x-input-label for="address" :value="__('Adresse :')" />
+            <x-text-input id="address" name="address" type="text" class="block w-full mt-1" :value="old('address', optional($jobseeker)->address)" required autofocus autocomplete="address" />
+        </div>
 
-            <div class="mb-4">
-                <label for="contact_info" class="block text-gray-700 font-bold mb-2">Informations de contact :</label>
-                <input type="text" id="contact_info" name="contact_info" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Informations de contact" required>
-            </div>
+        <div class="mb-4">
+            <x-input-label for="contact_information" :value="__('Informations de contact :')" />
+            <x-text-input id="contact_information" name="contact_information" type="text" class="block w-full mt-1" :value="old('contact_information', optional($jobseeker)->contact_information)" required autofocus autocomplete="contact_information" />
+        </div>
 
-            <div class="mb-4">
-                <label for="about" class="block text-gray-700 font-bold mb-2">À propos :</label>
-                <textarea id="about" name="about" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="À propos" required></textarea>
-            </div>
 
 
         <div>

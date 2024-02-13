@@ -8,11 +8,11 @@
     <section class="flex flex-col justify-center lg:flex-row gap-2 mx-auto">
 
         <div class="py-12 lg:w-1/3">
-        @if(auth()->user()->role === 'company')
-        @include('profile.partials.leftside-profile')
-                        @elseif(auth()->user()->role === 'user')
-                        @include('profile.partials.user-leftside-profile')
-                        @endif
+            @if(auth()->user()->role === 'company')
+            @include('profile.partials.leftside-profile')
+            @elseif(auth()->user()->role === 'user')
+            @include('profile.partials.user-leftside-profile')
+            @endif
 
 
 
@@ -27,9 +27,9 @@
                     <div class="p-6">
                         <h2 class="text-xl font-semibold text-gray-800 mb-4">Mise à jour des informations de profil</h2>
                         @if(auth()->user()->role === 'company')
-                                @include('profile.partials.update-profile-information-form')
+                        @include('profile.partials.update-profile-information-form')
                         @elseif(auth()->user()->role === 'user')
-                                @include('profile.partials.update-profile-user-information')
+                        @include('profile.partials.update-profile-user-information')
                         @endif
                     </div>
                 </div>
