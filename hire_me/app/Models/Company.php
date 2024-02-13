@@ -24,4 +24,8 @@ class Company extends Model
     {
         return $this->hasMany(JobOffer::class);
     }
+    public function jobSeeker()
+    {
+        return $this->belongsTo(JobSeeker::class);
+    }
 }

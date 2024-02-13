@@ -12,7 +12,6 @@ class JobSeekerController extends Controller
      */
     public function index()
     {
-        return view('profile.curriculum-vitae');
     }
 
     /**
