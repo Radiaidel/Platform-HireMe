@@ -1,6 +1,15 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto p-8">
 
+        <div class="mb-4">
+            <input type="text" id="searchInput" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Rechercher une offre">
+        </div>
+
+        <div id="searchResults" class="space-y-4">
+            <!-- Les offres de recherche seront affichées ici -->
+        </div>
+
+
         @if (auth()->user()->role === 'company' && auth()->user()->company !== null)
         <button onclick="showModal()" id="showModalButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8">Ajouter une offre d'emploi</button>
         @endif
@@ -132,17 +141,86 @@
 </x-app-layout>
 
 <script>
-    // Récupérer le bouton d'ajout d'offre d'emploi
+    const searchOffers = () => {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+
+        if (searchTerm.length >= 3) {
+            const searchData = {
+                search: searchTerm
+            };
+
+            const xhr = new XMLHttpRequest();
+            const url = '/search-offers';
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const response = JSON.parse(xhr.responseText);
+                    const searchResultsContainer = document.getElementById('searchResults');
+                    searchResultsContainer.innerHTML = '';
+                    if (response.length === 0) {
+                        searchResultsContainer.innerHTML = '<p>Aucune offre trouvée.</p>';
+                    } else {
+                        response.forEach(offer => {
+                            const offerElement = document.createElement('div');
+                            offerElement.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'mb-4');
+
+                            offerElement.innerHTML = `
+                        <a href="{{ route('offers.show', $offer->id) }}" class="block mb-4">
+                            <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                                <div class="flex items-center">
+                                    <img class="w-12 h-12 rounded-full mr-4" src="${offer.company.logo_url}" alt="Logo">
+                                    <div>
+                                        <h3 class="font-semibold text-lg">${offer.title}</h3>
+                                        <p class="text-gray-600">par <span class="text-blue-500">${offer.company.name}</span></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600 text-xs">${offer.location}</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-gray-700">${offer.description}</p>
+                            </div>
+                            <div class="p-4 flex items-center justify-between border-t border-gray-200">
+                                <div>
+                                    <span class="bg-blue-100 text-blue-500 px-2 py-1 rounded-full  border border-blue-500">${offer.contract_type}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">${offer.deadline ? offer.deadline : 'Pas de date limite'}</span>
+                                </div>
+                            </div>
+                            </a>
+                        `;
+
+                            searchResultsContainer.appendChild(offerElement);
+                        });
+                    }
+                } else {
+                    console.error('La requête a échoué');
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Une erreur s\'est produite lors de la connexion');
+            };
+
+            xhr.send(JSON.stringify(searchData));
+        }
+    };
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', searchOffers);
+
+
     const showModalButton = document.getElementById('showModalButton');
-    // Récupérer le modal
     const modal = document.getElementById('myModal');
 
-    // Fonction pour afficher le modal
     function showModal() {
         modal.classList.remove('hidden');
     }
 
-    // Fonction pour masquer le modal
     function hideModal() {
         modal.classList.add('hidden');
     }

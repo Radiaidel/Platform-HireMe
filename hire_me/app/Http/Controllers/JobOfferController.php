@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
+use App\Models\Company;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
@@ -68,5 +70,24 @@ class JobOfferController extends Controller
     }
 
 
+    public function searchOffers(Request $request)
+    {
+        $searchTerm = $request->input('search');
+    
+        $offers = JobOffer::where('title', 'like', "%$searchTerm%")
+                        ->orWhere('skills_required', 'like', "%$searchTerm%")
+                        ->orWhere('contract_type', 'like', "%$searchTerm%")
+                        ->orWhere('location', 'like', "%$searchTerm%")
+                        ->with('company') // Charger les informations de l'entreprise associée à chaque offre
+                        ->get();
+    
+        return response()->json($offers);
+    }
+    public function OfferByCompany($id)
+    {
+        $company = Company::findOrFail($id);
+        $offers = $company->jobOffers; // Assurez-vous que vous avez défini une relation entre les entreprises et les offres dans vos modèles
 
+        return view('company.offers-company', compact('company', 'offers'));
+    }
 }

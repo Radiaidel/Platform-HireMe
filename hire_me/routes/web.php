@@ -6,6 +6,7 @@ use App\Http\Controllers\CvController;
 
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/offers/{offer}', [JobOfferController::class, 'show'])->name('offers.show');
+    Route::post('/search-offers', [JobOfferController::class, 'searchOffers'])->name('search.offers');
 });
 
 Route::middleware(['auth', 'role:company'])->group(function () {
@@ -53,6 +55,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/save-cv', [CVController::class, 'store']);
     Route::get('/download-cv', [CVController::class, 'downloadCV'])->name('download-cv');
     Route::get('/postuler/{offer}', [ApplicationController::class, 'apply'])->name('apply');
+    Route::get('/company', [CompanyController::class, 'index'])->name('company');
+    Route::get('/company/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('company.offers');
 });
 
 // Route::middleware(['auth', 'role:admin'])->group(function () {
