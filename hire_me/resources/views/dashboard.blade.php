@@ -109,7 +109,7 @@
                                             <select id="contract_type" name="contract_type" class="border border-gray-300 rounded-md px-3 py-2 w-full" required>
                                                 <option value="à distance">À distance</option>
                                                 <option value="hybride">Hybride</option>
-                                                <option value="temps_plein">À temps plein</option>
+                                                <option value="à temps plein">À temps plein</option>
                                             </select>
                                         </div>
                                         <div class="mb-4">

@@ -26,4 +26,8 @@ class JobSeeker extends Model
     {
         return $this->hasOne(CurriculumVitae::class);
     }
+    public function applications()
+{
+    return $this->hasMany(Application::class);
+}
 }

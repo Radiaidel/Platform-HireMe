@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CvController;
 
 use App\Http\Controllers\JobOfferController;
-use App\Http\Controllers\JobSeekerController;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +40,7 @@ Route::middleware(['auth', 'role:company'])->group(function () {
     Route::post('/offers', [JobOfferController::class, 'destroy'])->name('offer.destroy');
     Route::get('/offers/{offer}/edit', [JobOfferController::class, 'edit'])->name('offers.edit');
     Route::put('/offers/update', [JobOfferController::class, 'update'])->name('offers.update');
+    Route::get('/get-candidates/{id}', [ApplicationController::class, 'getCandidates']);
 });
 
 
@@ -48,7 +49,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/remplir-cv', [CvController::class, 'index'])->name('cv.form');
     Route::get('/CV/Show', [CvController::class, 'Show'])->name('CV.Show');
     Route::post('/save-cv', [CVController::class, 'store']);
-    Route::get('/download-cv', [CVController::class, 'downloadCV'])->name('download-cv');});
+    Route::get('/download-cv', [CVController::class, 'downloadCV'])->name('download-cv');
+    Route::get('/postuler/{offer}', [ApplicationController::class, 'apply'])->name('apply');
+});
 
 // Route::middleware(['auth', 'role:admin'])->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
