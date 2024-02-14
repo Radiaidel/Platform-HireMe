@@ -41,6 +41,8 @@ Route::middleware(['auth', 'role:company'])->group(function () {
     Route::get('/offers/{offer}/edit', [JobOfferController::class, 'edit'])->name('offers.edit');
     Route::put('/offers/update', [JobOfferController::class, 'update'])->name('offers.update');
     Route::get('/get-candidates/{id}', [ApplicationController::class, 'getCandidates']);
+    Route::get('/CV/Show{id}', [CvController::class, 'ShowByid'])->name('CV.Show');
+
 });
 
 

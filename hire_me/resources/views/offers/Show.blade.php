@@ -104,45 +104,36 @@
 
                 response.forEach(application => {
                     const candidate = application.job_seeker.user;
-                    const cvUrl = candidate.cv ? candidate.cv.download_url : ''; // URL to download CV
 
-                    // Create list item for each candidate
                     const listItem = document.createElement('li');
 
-                    // Create a div to hold candidate information
                     const candidateInfo = document.createElement('div');
-                    candidateInfo.classList.add('candidate-info');
+                    candidateInfo.classList.add('candidate-info','flex','justify-between','w-full');
 
-                    // Create an image element for candidate's image
+                    const right= document.createElement('div','flex','items-center');
+                    const info= document.createElement('div');
+                    
+
+
                     const imageElement = document.createElement('img');
-                    imageElement.src = candidate.image_url;
+                    imageElement.src = "assets("+candidate.image_url+")";
                     imageElement.alt = candidate.name + ' Image';
 
-                    // Create a paragraph for candidate's name
                     const nameParagraph = document.createElement('p');
                     nameParagraph.textContent = candidate.name;
 
-                    // Create a paragraph for candidate's email
                     const emailParagraph = document.createElement('p');
                     emailParagraph.textContent = candidate.email;
 
-                    // Create a button to view candidate's CV
-                    const cvButton = document.createElement('button');
-                    cvButton.textContent = 'Voir le CV';
-                    cvButton.addEventListener('click', () => {
-                        window.open(cvUrl, '_blank');
-                    });
+                    info.appendChild(nameParagraph);
+                    info.appendChild(emailParagraph);
+                    right.appendChild(imageElement);
+                    candidateInfo.appendChild(right);
+                    candidateInfo.appendChild(info);
 
-                    // Append elements to candidate info div
-                    candidateInfo.appendChild(imageElement);
-                    candidateInfo.appendChild(nameParagraph);
-                    candidateInfo.appendChild(emailParagraph);
-                    candidateInfo.appendChild(cvButton);
 
-                    // Append candidate info div to list item
                     listItem.appendChild(candidateInfo);
 
-                    // Append list item to candidates list
                     candidatesList.appendChild(listItem);
                 });
 
