@@ -46,8 +46,9 @@ Route::middleware(['auth', 'role:company'])->group(function () {
 Route::middleware(['auth', 'role:user'])->group(function () {
 
     Route::get('/remplir-cv', [CvController::class, 'index'])->name('cv.form');
+    Route::get('/CV/Show', [CvController::class, 'Show'])->name('CV.Show');
     Route::post('/save-cv', [CVController::class, 'store']);
-});
+    Route::get('/download-cv', [CVController::class, 'downloadCV'])->name('download-cv');});
 
 // Route::middleware(['auth', 'role:admin'])->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
