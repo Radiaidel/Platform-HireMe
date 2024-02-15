@@ -5,7 +5,15 @@
         <span class="block sm:inline">{{ session('error') }}</span>
     </div>
     @endif
-
+    @if ($errors->any())
+    <div class="text-red-500">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
         <strong class="font-bold">Succès!</strong>
@@ -46,10 +54,10 @@
                     @endif
                 </div>
             </div>
-           
+
             <div class="mt-8 bg-white rounded-lg shadow-md overflow-hidden p-6">
                 <h3 class="text-lg font-bold mb-4">Inscription à la newsletter</h3>
-                <form action="" method="POST">
+                <form action="{{ route('subscribe.newsletter') }}" method="POST">
                     @csrf
                     <div class="flex flex-col">
                         <label for="email" class="text-sm text-gray-600 mb-2">Adresse e-mail</label>

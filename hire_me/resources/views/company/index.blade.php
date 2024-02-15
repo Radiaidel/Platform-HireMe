@@ -3,11 +3,11 @@
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold mb-4">Liste des entreprises</h1>
 
-        @if ($message)
+        @isset ($message)
             <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
                 <p>{{ $message }}</p>
             </div>
-        @endif
+        @endisset
 
         <!-- Champ de recherche -->
         <form action="{{ route('company.search') }}" method="GET" class="mb-4">
