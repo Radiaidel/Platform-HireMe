@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('industry');
             $table->text('description');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('is_archived')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

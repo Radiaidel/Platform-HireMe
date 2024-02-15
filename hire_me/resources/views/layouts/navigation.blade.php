@@ -5,9 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block fill-current text-gray-800" />
-                    </a>
+                    <x-application-logo class="block fill-current text-gray-800" />
                 </div>
             </div>
 
@@ -27,10 +25,16 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        @if(auth()->user()->role === 'user')
-                        <x-responsive-nav-link :href="route('company')">
+                        @if(Auth::user()->role === 'admin')
+                        <x-dropdown-link :href="route('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-dropdown-link>
+                        @endif
+                        @if(Auth::user()->role !== 'company')
+
+                        <x-dropdown-link :href="route('company')">
                             {{ __('Company') }}
-                        </x-responsive-nav-link>
+                        </x-dropdown-link>
                         @endif
                         <x-dropdown-link :href="route('dashboard')">
                             {{ __('Offers') }}
@@ -79,6 +83,11 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                @if(auth()->user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')">
+                    {{ __('dashboard') }}
+                </x-responsive-nav-link>
+                @endif
                 @if(auth()->user()->role == 'user')
                 <x-responsive-nav-link :href="route('dashboard')">
                     {{ __('company') }}

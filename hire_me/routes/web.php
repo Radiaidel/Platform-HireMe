@@ -7,6 +7,7 @@ use App\Http\Controllers\CvController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/offers/{offer}', [JobOfferController::class, 'show'])->name('offers.show');
     Route::post('/search-offers', [JobOfferController::class, 'searchOffers'])->name('search.offers');
+
 });
 
 Route::middleware(['auth', 'role:company'])->group(function () {
@@ -61,10 +63,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/subscribe-newsletter', [CompanyController::class, 'subscribeToNewsletter'])->name('subscribe.newsletter');
 });
 
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/archive-offers', [JobOfferController::class, 'softDelete'])->name('archive.offers');
+    Route::get('/company', [CompanyController::class, 'index'])->name('company');
+    Route::get('/company/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('company.offers');
+    Route::get('/companies/search', [CompanyController::class, 'search'])->name('company.search');
+
+});
 
 require __DIR__ . '/auth.php';

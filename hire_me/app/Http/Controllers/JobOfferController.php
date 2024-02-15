@@ -30,7 +30,7 @@ class JobOfferController extends Controller
             }
         }
 
-        return view('dashboard', compact('offers', 'message'));
+        return view('offers.index', compact('offers', 'message'));
     }
 
 
@@ -70,24 +70,44 @@ class JobOfferController extends Controller
     }
 
 
+
+
     public function searchOffers(Request $request)
     {
+        $message = '';
         $searchTerm = $request->input('search');
-    
+
         $offers = JobOffer::where('title', 'like', "%$searchTerm%")
-                        ->orWhere('skills_required', 'like', "%$searchTerm%")
-                        ->orWhere('contract_type', 'like', "%$searchTerm%")
-                        ->orWhere('location', 'like', "%$searchTerm%")
-                        ->with('company') // Charger les informations de l'entreprise associée à chaque offre
-                        ->get();
-    
-        return response()->json($offers);
+        ->orWhere('skills_required', 'like', "%$searchTerm%")
+        ->orWhere('contract_type', 'like', "%$searchTerm%")
+        ->orWhere('location', 'like', "%$searchTerm%")
+        ->with('company') // Charger les informations de l'entreprise associée à chaque offre
+        ->get();
+
+        if ($offers->isEmpty()) {
+            $offers = JobOffer::all();
+            $message = 'Aucune offre trouvée.';
+        }
+        return view('offers.index', compact('offers'))->with('message', $message);
     }
+
     public function OfferByCompany($id)
     {
         $company = Company::findOrFail($id);
         $offers = $company->jobOffers; // Assurez-vous que vous avez défini une relation entre les entreprises et les offres dans vos modèles
 
         return view('company.offers-company', compact('company', 'offers'));
+    }
+
+    public function softDelete($offerId)
+    {
+        $offer = JobOffer::find($offerId);
+
+        if ($offer) {
+            $offer->delete();
+            return redirect()->back()->with('success', 'L\'offre a été supprimée avec succès.');
+        } else {
+            return redirect()->back()->with('error', 'L\'offre n\'a pas été trouvée.');
+        }
     }
 }

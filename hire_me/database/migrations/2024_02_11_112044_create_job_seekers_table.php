@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('contact_information')->nullable();
             $table->text('about')->nullable();
-            $table->integer('is_archived')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

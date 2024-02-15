@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('location');
             $table->timestamp('deadline')->nullable();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->integer('is_archived')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
