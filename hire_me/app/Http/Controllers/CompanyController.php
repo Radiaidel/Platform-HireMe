@@ -22,4 +22,27 @@ class CompanyController extends Controller
     
         return view('company.index', compact('companies'));
     }
+    public function search(Request $request)
+    {
+        $message='';
+        $searchTerm = $request->input('search');
+    
+        $companies = Company::where('name', 'like', "%$searchTerm%")
+                            ->orWhere('slogan', 'like', "%$searchTerm%")
+                            ->join('users', 'companies.user_id', '=', 'users.id')
+                            ->select('companies.*', 'users.name', 'users.image_url')
+                            ->get();
+    
+        if ($companies->isEmpty()) {
+            $companies = Company::join('users', 'companies.user_id', '=', 'users.id')
+                                ->select('companies.*', 'users.name', 'users.image_url')
+                                ->get();
+    
+            $message = 'Aucune entreprise trouvée.';
+        }
+    
+        return view('company.index', compact('companies'))->with('message',$message);
+    }
+    
+    
 }

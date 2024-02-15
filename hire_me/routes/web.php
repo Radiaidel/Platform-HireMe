@@ -57,6 +57,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/postuler/{offer}', [ApplicationController::class, 'apply'])->name('apply');
     Route::get('/company', [CompanyController::class, 'index'])->name('company');
     Route::get('/company/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('company.offers');
+    Route::get('/companies/search', [CompanyController::class, 'search'])->name('company.search');
 });
 
 // Route::middleware(['auth', 'role:admin'])->group(function () {

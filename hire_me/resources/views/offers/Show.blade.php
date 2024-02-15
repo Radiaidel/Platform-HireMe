@@ -46,7 +46,20 @@
                     @endif
                 </div>
             </div>
+           
+            <div class="mt-8 bg-white rounded-lg shadow-md overflow-hidden p-6">
+                <h3 class="text-lg font-bold mb-4">Inscription à la newsletter</h3>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="flex flex-col">
+                        <label for="email" class="text-sm text-gray-600 mb-2">Adresse e-mail</label>
+                        <input type="email" id="email" name="email" class="border border-gray-300 rounded-md px-3 py-2 mb-4" required>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">S'abonner</button>
+                    </div>
+                </form>
+            </div>
         </div>
+
     </div>
 
     <!-- Modal pour afficher les candidats -->
@@ -108,15 +121,15 @@
                     const listItem = document.createElement('li');
 
                     const candidateInfo = document.createElement('div');
-                    candidateInfo.classList.add('candidate-info','flex','justify-between','w-full');
+                    candidateInfo.classList.add('candidate-info', 'flex', 'justify-between', 'w-full');
 
-                    const right= document.createElement('div','flex','items-center');
-                    const info= document.createElement('div');
-                    
+                    const right = document.createElement('div', 'flex', 'items-center');
+                    const info = document.createElement('div');
+
 
 
                     const imageElement = document.createElement('img');
-                    imageElement.src = "assets("+candidate.image_url+")";
+                    imageElement.src = "assets(" + candidate.image_url + ")";
                     imageElement.alt = candidate.name + ' Image';
 
                     const nameParagraph = document.createElement('p');

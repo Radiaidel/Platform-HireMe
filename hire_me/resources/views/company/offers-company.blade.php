@@ -16,7 +16,7 @@
                         <img class="w-12 h-12 rounded-full mr-4" src="{{ asset('storage/app/' . $offer->company->logo) }}" alt="Logo">
                         <div>
                             <h3 class="font-semibold text-lg">{{ $offer->title }}</h3>
-                            <p class="text-gray-600">par <span class="text-blue-500">{{ auth()->user()->name }}</span></p>
+                            <p class="text-gray-600">par <span class="text-blue-500">{{ $offer->company->user->name }}</span></p>
                         </div>
                     </div>
                     <div>
