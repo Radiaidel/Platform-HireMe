@@ -11,7 +11,7 @@
 <div style="display:flex; justify-content :space-between;align-items:center;">
 
     <div class="user-info">
-        <img src="{{ $user->image_url }}" alt="User Image" style="width: 100px; border-radius: 50%;">
+        <img src="{{ asset('storage/' . auth()->user()->image_url) }}" alt="User Image" style="width: 100px; border-radius: 50%;">
         <p>{{ $user->name }}</p>
     </div>
     <div>

@@ -220,6 +220,7 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 console.log('CV enregistré avec succès !');
+                window.location.href = "/profile"; // Redirection côté client
             } else {
                 console.error('Erreur lors de l\'enregistrement du CV');
             }

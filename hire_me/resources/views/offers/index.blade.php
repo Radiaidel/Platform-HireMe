@@ -39,7 +39,7 @@
                 <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
                     <div class="flex items-center justify-between p-4 border-b border-gray-200">
                         <div class="flex items-center">
-                            <img class="w-12 h-12 rounded-full mr-4" src="{{ asset('storage/app/' . $offer->company->logo) }}" alt="Logo">
+                            <img class="w-12 h-12 rounded-full mr-4" src="{{ asset('storage/' . $offer->company->user->image_url) }}" alt="Logo">
                             <div>
                                 <h3 class="font-semibold text-lg">{{ $offer->title }}</h3>
                                 <p class="text-gray-600">par <span class="text-blue-500">{{ $offer->company->user->name }}</span></p>

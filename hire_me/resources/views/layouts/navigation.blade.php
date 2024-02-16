@@ -32,7 +32,7 @@
                         <x-dropdown-link :href="route('users.index')">
                             {{ __('JobSeekers') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('ManageCompany')">
+                        <x-dropdown-link :href="route('company')">
                             {{ __('Company') }}
                         </x-dropdown-link>
                         @endif

@@ -40,7 +40,7 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-8">
                     <div class="flex items-center">
-                        <img class="w-12 h-12 rounded-full mr-4" src="{{ asset('storage/app/' . $offer->company->logo) }}" alt="Logo">
+                        <img class="w-12 h-12 rounded-full mr-4" src="{{ asset('storage/' . $offer->company->user->image_url) }}" alt="Logo">
                         <div>
                             <p class="text-gray-600">par <span class="text-blue-500">{{ auth()->user()->name }}</span></p>
                         </div>
@@ -137,7 +137,7 @@
 
 
                     const imageElement = document.createElement('img');
-                    imageElement.src = "assets(" + candidate.image_url + ")";
+                    imageElement.src = "assets('storage/'" + candidate.image_url + ")";
                     imageElement.alt = candidate.name + ' Image';
 
                     const nameParagraph = document.createElement('p');
