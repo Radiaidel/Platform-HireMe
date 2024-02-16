@@ -37,7 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/offers/{offer}', [JobOfferController::class, 'show'])->name('offers.show');
     Route::post('/search-offers', [JobOfferController::class, 'searchOffers'])->name('search.offers');
-
 });
 
 Route::middleware(['auth', 'role:company'])->group(function () {
@@ -47,12 +46,13 @@ Route::middleware(['auth', 'role:company'])->group(function () {
     Route::put('/offers/update', [JobOfferController::class, 'update'])->name('offers.update');
     Route::get('/get-candidates/{id}', [ApplicationController::class, 'getCandidates']);
     Route::get('/CV/Show{id}', [CvController::class, 'ShowByid'])->name('CV.Show');
+    Route::get('/company', [CompanyController::class, 'index'])->name('company');
+
 
 });
 
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-
     Route::get('/remplir-cv', [CvController::class, 'index'])->name('cv.form');
     Route::get('/CV/Show', [CvController::class, 'Show'])->name('CV.Show');
     Route::post('/save-cv', [CVController::class, 'store']);
@@ -67,13 +67,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/archive-offers', [JobOfferController::class, 'softDelete'])->name('archive.offers');
-    Route::get('/company', [CompanyController::class, 'index'])->name('company');
-    Route::get('/company/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('company.offers');
-    Route::get('/companies/search', [CompanyController::class, 'search'])->name('company.search');
-    Route::delete('/company/{id}', [CompanyController::class, 'softDelete'])->name('company.softDelete');
-    Route::delete('/offers/{id}',[JobOfferController::class, 'softDelete'])->name('offers.softDelete');
-    Route::get('/users', [JobSeekerController::class, 'index'])->name('users.index');
-    Route::delete('/users/{id}',  [JobSeekerController::class, 'softDelete'])->name('users.softDelete');
+    Route::get('/ManageCompany', [CompanyController::class, 'index'])->name('ManageCompany');
+    Route::get('/ManageCompany/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('ManageCompany.offers');
+    Route::get('/ManageCompany/search', [CompanyController::class, 'search'])->name('ManageCompany.search');
+    Route::delete('/ManageCompany/{id}', [CompanyController::class, 'softDelete'])->name('company.softDelete');
+    Route::delete('/ManageOffers/{id}',[JobOfferController::class, 'softDelete'])->name('offers.softDelete');
+    Route::get('/ManageUsers', [JobSeekerController::class, 'index'])->name('users.index');
+    Route::delete('/ManageUsers/{id}',  [JobSeekerController::class, 'softDelete'])->name('users.softDelete');
 });
 
 require __DIR__ . '/auth.php';

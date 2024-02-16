@@ -18,7 +18,6 @@ class JobSeeker extends Model
         'contact_information',
         'about',
         'title',
-        'is_archived',
     ];
     protected $dates = ['deleted_at'];
 

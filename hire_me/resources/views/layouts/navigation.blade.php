@@ -32,9 +32,11 @@
                         <x-dropdown-link :href="route('users.index')">
                             {{ __('JobSeekers') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('ManageCompany')">
+                            {{ __('Company') }}
+                        </x-dropdown-link>
                         @endif
-                        @if(Auth::user()->role !== 'company')
-
+                        @if(Auth::user()->role === 'user')
                         <x-dropdown-link :href="route('company')">
                             {{ __('Company') }}
                         </x-dropdown-link>
