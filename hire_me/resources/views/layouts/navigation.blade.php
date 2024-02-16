@@ -29,6 +29,9 @@
                         <x-dropdown-link :href="route('admin.dashboard')">
                             {{ __('Dashboard') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('users.index')">
+                            {{ __('JobSeekers') }}
+                        </x-dropdown-link>
                         @endif
                         @if(Auth::user()->role !== 'company')
 

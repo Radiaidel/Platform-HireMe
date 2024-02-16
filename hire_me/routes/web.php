@@ -8,6 +8,7 @@ use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JobSeekerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/companies/search', [CompanyController::class, 'search'])->name('company.search');
     Route::delete('/company/{id}/archive', [CompanyController::class, 'softDelete'])->name('company.softdelete');
     Route::delete('/offers/{id}',[JobOfferController::class, 'softDelete'])->name('offers.softDelete');
+    Route::get('/users', [JobSeekerController::class, 'index'])->name('users.index');
+    Route::delete('/users/{id}',  [JobSeekerController::class, 'softDelete'])->name('users.softDelete');
 });
 
 require __DIR__ . '/auth.php';

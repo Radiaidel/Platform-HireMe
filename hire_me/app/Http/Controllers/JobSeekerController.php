@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobSeeker;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JobSeekerController extends Controller
@@ -12,8 +13,16 @@ class JobSeekerController extends Controller
      */
     public function index()
     {
+        $users = User::where('role', 'user')->get();       
+         return view('users.index', compact('users'));
+    }   
+    public function softDelete(Request $request, $id)
+    {
+        $user = JobSeeker::findOrFail($id);
+        $user->delete();
+    
+        return redirect()->route('users.index')->with('message', 'L\'utilisateur a été archivé avec succès.');
     }
-
     /**
      * Show the form for creating a new resource.
      */

@@ -69,8 +69,7 @@ class CompanyController extends Controller
         $company = Company::findOrFail($id);
 
         $company->delete();
-
-        return redirect()->route('/company')->with('message', 'L\'entreprise a été supprimée avec succès.');
+        return redirect()->route('company')->with('message', 'L\'entreprise a été supprimée avec succès.');
     }
  
 }
