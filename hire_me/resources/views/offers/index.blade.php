@@ -5,13 +5,13 @@
             <input type="text" id="searchInput" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Rechercher une offre">
         </div> -->
         @if($message)
-            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
-                <p>{{ $message }}</p>
-            </div>
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+            <p>{{ $message }}</p>
+        </div>
         @endif
         <form action="{{ route('search.offers') }}" method="POST" class="mb-4">
             @csrf
-            <div class="flex" >
+            <div class="flex">
 
                 <input type="text" name="search" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Rechercher une offre">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rechercher</button>
@@ -48,7 +48,7 @@
                         <div>
                             <span class="text-gray-600 text-xs">{{ $offer->location }}</span>
                         </div>
-                      
+
                     </div>
                     <div class="p-4">
                         <p class="text-gray-700">{{ $offer->description }}</p>
@@ -71,10 +71,12 @@
                     </div>
                     @endif
                     @if (auth()->user()->role === 'admin')
-                        <div class="">
-                            <a href="{{ route('archive.offers') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Archiver les offres</a>
-                        </div>
-                        @endif
+                    <form action="{{ route('offers.softDelete', $offer->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                    </form>
+                    @endif
                 </div>
             </a>
             @endforeach
@@ -160,7 +162,6 @@
 </x-app-layout>
 
 <script>
-
     const showModalButton = document.getElementById('showModalButton');
     const modal = document.getElementById('myModal');
 

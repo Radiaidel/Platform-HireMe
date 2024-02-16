@@ -69,7 +69,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/company', [CompanyController::class, 'index'])->name('company');
     Route::get('/company/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('company.offers');
     Route::get('/companies/search', [CompanyController::class, 'search'])->name('company.search');
-
+    Route::delete('/company/{id}/archive', [CompanyController::class, 'softDelete'])->name('company.softdelete');
+    Route::delete('/offers/{id}',[JobOfferController::class, 'softDelete'])->name('offers.softDelete');
 });
 
 require __DIR__ . '/auth.php';

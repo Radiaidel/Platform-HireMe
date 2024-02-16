@@ -64,6 +64,13 @@ class CompanyController extends Controller
 
         }
     }
+    public function softDelete($id)
+    {
+        $company = Company::findOrFail($id);
 
+        $company->delete();
+
+        return redirect()->route('/company')->with('message', 'L\'entreprise a été supprimée avec succès.');
+    }
  
 }

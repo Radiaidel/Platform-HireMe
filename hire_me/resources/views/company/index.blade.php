@@ -25,6 +25,13 @@
                         <h2 class="text-xl font-semibold mb-2">{{ $company->name }}</h2>
                         <p class="text-gray-700">{{ $company->description }}</p>
                         <a href="{{ route('company.offers', $company->id) }}" class="mt-4 text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">Voir les offres de cette entreprise</a>
+                        @if(auth()->user()->role === 'admin')
+                            <form action="{{ route('company.softdelete', $company->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="mt-4 text-center bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">Delete</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             @endforeach

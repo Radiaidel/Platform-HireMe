@@ -13,7 +13,7 @@ class JobOfferController extends Controller
     public function index()
     {
         $message = null;
-        $offers = collect();   
+        $offers = collect();
         if (auth()->user()->role === 'company' && auth()->user()->company !== null) {
             $offers = JobOffer::where('company_id', auth()->user()->company->id)->get();
 
@@ -21,12 +21,10 @@ class JobOfferController extends Controller
                 $message = "Vous n'avez pas encore ajouté d'offres d'emploi.";
             }
         } else {
-            if(auth()->user()->role === 'company'){
+            if (auth()->user()->role === 'company') {
                 $message = "Veuillez compléter votre profil d'entreprise pour ajouter une offre.";
-            }
-            else{
+            } else {
                 $offers = JobOffer::all();
-
             }
         }
 
@@ -78,11 +76,11 @@ class JobOfferController extends Controller
         $searchTerm = $request->input('search');
 
         $offers = JobOffer::where('title', 'like', "%$searchTerm%")
-        ->orWhere('skills_required', 'like', "%$searchTerm%")
-        ->orWhere('contract_type', 'like', "%$searchTerm%")
-        ->orWhere('location', 'like', "%$searchTerm%")
-        ->with('company') // Charger les informations de l'entreprise associée à chaque offre
-        ->get();
+            ->orWhere('skills_required', 'like', "%$searchTerm%")
+            ->orWhere('contract_type', 'like', "%$searchTerm%")
+            ->orWhere('location', 'like', "%$searchTerm%")
+            ->with('company') // Charger les informations de l'entreprise associée à chaque offre
+            ->get();
 
         if ($offers->isEmpty()) {
             $offers = JobOffer::all();
@@ -99,15 +97,12 @@ class JobOfferController extends Controller
         return view('company.offers-company', compact('company', 'offers'));
     }
 
-    public function softDelete($offerId)
+   
+    public function softDelete(Request $request, $id)
     {
-        $offer = JobOffer::find($offerId);
+        $offer = JobOffer::findOrFail($id);
+        $offer->delete();
 
-        if ($offer) {
-            $offer->delete();
-            return redirect()->back()->with('success', 'L\'offre a été supprimée avec succès.');
-        } else {
-            return redirect()->back()->with('error', 'L\'offre n\'a pas été trouvée.');
-        }
+        return redirect()->back()->with('message', 'L\'offre a été archivée avec succès.');
     }
 }
