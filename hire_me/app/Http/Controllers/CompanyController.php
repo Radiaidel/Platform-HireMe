@@ -17,13 +17,14 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companies = User::where('role', 'company')
+        $users = User::where('role', 'company')
             ->join('companies', 'users.id', '=', 'companies.user_id')
             ->select('users.name', 'users.image_url', 'companies.*')
             ->get();
 
-        return view('company.index', compact('companies'));
+        return view('company.index', compact('users'));
     }
+
     public function search(Request $request)
     {
         $message = '';
@@ -61,15 +62,15 @@ class CompanyController extends Controller
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
-
         }
     }
+
     public function softDelete($id)
     {
         $company = Company::findOrFail($id);
 
         $company->delete();
-        return redirect()->route('company')->with('message', 'L\'entreprise a été supprimée avec succès.');
+
+        return redirect()->back()->with('message', 'L\'entreprise a été archivée avec succès.'); // Redirection avec un message de succès
     }
- 
 }

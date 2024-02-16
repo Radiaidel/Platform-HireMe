@@ -70,7 +70,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/company', [CompanyController::class, 'index'])->name('company');
     Route::get('/company/{id}/offers', [JobOfferController::class, 'OfferByCompany'])->name('company.offers');
     Route::get('/companies/search', [CompanyController::class, 'search'])->name('company.search');
-    Route::delete('/company/{id}/archive', [CompanyController::class, 'softDelete'])->name('company.softdelete');
+    Route::delete('/company/{id}', [CompanyController::class, 'softDelete'])->name('company.softDelete');
     Route::delete('/offers/{id}',[JobOfferController::class, 'softDelete'])->name('offers.softDelete');
     Route::get('/users', [JobSeekerController::class, 'index'])->name('users.index');
     Route::delete('/users/{id}',  [JobSeekerController::class, 'softDelete'])->name('users.softDelete');
