@@ -17,7 +17,6 @@ class CvController extends Controller
     {
         $cvData = $request->all();
 
-
         $cv = new CurriculumVitae([
             'skills' => $cvData['competence'],
             'experiences' => $cvData['experience'],

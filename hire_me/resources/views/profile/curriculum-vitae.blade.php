@@ -73,9 +73,15 @@
             </div>
             <div id="langue-info"></div>
         </div>
-        <button onclick="saveCV()" class="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 focus:outline-none mt-4">
-            Enregistrer le CV
-        </button>
+
+
+        <form action="{{route('saveCV')}}" method="POST" id="cvForm">
+            @csrf
+            <input type="hidden" name="cvData" id="cvData">
+            <button onclick="submitForm()" class="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 focus:outline-none mt-4">
+                Enregistrer le CV
+            </button>
+        </form>
 
     </section>
 </x-app-layout>
@@ -91,7 +97,6 @@
     function addCompetence() {
         const category = document.getElementById('competence-category').value;
         const technologies = document.getElementById('competence-technologies').value;
-
         if (category.trim() !== '' && technologies.trim() !== '') {
             const competence = {
                 category,
@@ -111,7 +116,6 @@
         const location = document.getElementById('experience-location').value;
         const startDate = document.getElementById('experience-start-date').value;
         const endDate = document.getElementById('experience-end-date').value;
-
         if (job.trim() !== '' && company.trim() !== '' && location.trim() !== '' && startDate !== '' && endDate !== '') {
             cvData.experience.push({
                 job,
@@ -138,7 +142,6 @@
         const location = document.getElementById('education-location').value;
         const startDate = document.getElementById('education-start-date').value;
         const endDate = document.getElementById('education-end-date').value;
-
         if (school.trim() !== '' && location.trim() !== '' && startDate !== '' && endDate !== '') {
             cvData.education.push({
                 school,
@@ -161,7 +164,6 @@
     function addLanguage() {
         const name = document.getElementById('language-name').value;
         const level = document.getElementById('language-level').value;
-
         if (name.trim() !== '' && level.trim() !== '') {
             cvData.langue.push({
                 name,
@@ -211,20 +213,23 @@
         }
     }
 
-
-    function saveCV() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/save-cv');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log('CV enregistré avec succès !');
-                window.location.href = "/profile"; // Redirection côté client
-            } else {
-                console.error('Erreur lors de l\'enregistrement du CV');
-            }
-        };
-        xhr.send(JSON.stringify(cvData));
+    function submitForm() {
+        event.preventDefault();
+        document.getElementById("cvData").value = JSON.stringify(cvData);
+        document.getElementById("cvForm").submit();
     }
+    // function saveCV() {
+    //         var xhr = new XMLHttpRequest();
+    //         xhr.open('POST', '/save-cv');
+    //         xhr.setRequestHeader('Content-Type', 'application/json');
+    //         xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    //         xhr.onload = function() {
+    //             if (xhr.status === 200) {
+    //                 console.log('CV enregistré avec succès !');
+    //             } else {
+    //                 console.error('Erreur lors de l\'enregistrement du CV');
+    //             }
+    //         };
+    //         xhr.send(JSON.stringify(cvData)); // Envoi des données JSON au serveur
+    //     }
 </script>

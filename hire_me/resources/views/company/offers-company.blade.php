@@ -34,7 +34,8 @@
                         <span class="text-gray-600">{{ $offer->deadline ? $offer->deadline->format('d/m/Y') : 'Pas de date limite' }}</span>
                     </div>
                 </div>
-                @if(auth()->user()->role === 'company')
+                
+                @if(auth()->user()->role === 'company' && $offer->company_id == auth()->user()->company->id)
                 <div class="p-4 flex items-center justify-between">
                     <form action="{{route('offer.destroy')}}" method="POST">
                         @csrf

@@ -62,9 +62,9 @@ Route::middleware(['auth', 'role:company'])->group(function () {
 
 
 Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::post('/save-cv', [CVController::class, 'store'])->name('saveCV');
     Route::get('/remplir-cv', [CvController::class, 'index'])->name('cv.form');
     Route::get('/CV/Show', [CvController::class, 'Show'])->name('CV.Show');
-    Route::post('/save-cv', [CVController::class, 'store']);
     Route::get('/download-cv', [CVController::class, 'downloadCV'])->name('download-cv');
     Route::get('/postuler/{offer}', [ApplicationController::class, 'apply'])->name('apply');
     Route::post('/subscribe-newsletter', [CompanyController::class, 'subscribeToNewsletter'])->name('subscribe.newsletter');
